@@ -1,0 +1,33 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanToFhir" = "eMediplanToFhir"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanMedication" as source
+uses "http://hl7.org/fhir/StructureDefinition/CarePlan" as target
+
+group tutorial
+  input source : eMediplanMedication as source
+  input target : CarePlan as target
+
+rule_CarePlanStatus: for source make target.status = "active"
+rule_CarePlanIntent: for source make target.intent = "order"
+rule_Rmk: for source.Rmk as rmk make target.note as t_note then {
+	rule_rmk2: for rmk make t_note.text = rmk
+}
+rule_Auth: for source.Auth make create("Practitioner") as practitioner, target.author = reference(practitioner) then {
+	
+	rule_1: for source.Auth as author make practitioner.identifier as id then {
+		rule_1_1: for author where author.matches("/([0-9]){13}/g") make id.value = author
+		rule_1_2: for author where author.matches("/([0-9]){13}/g") make id.system = "https://www.medreg.admin.ch"
+		
+		rule_1_3: for author where author.matches("/^[0-9]+(?!0-9)$/g") make practitioner.name as name then {
+			rule_1_3_1: for author make name.text = author
+		}
+	}
+	
+	rule_2: for source.Auth make target.contained as contained then {
+		rule_2_1: for source.Auth make contained = practitioner
+	}
+}
+
+
+
+endgroup

@@ -1,0 +1,15 @@
+<ivy-module version="2.0">
+    <info organisation="org.springframework.boot" module="spring-boot-sample-ant" />
+    <configurations>
+        <conf name="compile" extends="build-subprojects" description="everything needed to compile this module" />
+        <conf name="runtime" extends="compile" description="everything needed to run this module" />
+        <conf name="build-subprojects" description="build referenced projects form converter" />
+    </configurations>
+
+    <dependencies>
+        <dependency org="org.springframework.boot" name="spring-boot-starter" rev="${spring-boot.version}" conf="compile" />
+        <dependency org="org.springframework.boot" name="spring-boot-starter-web" rev="${spring-boot.version}" conf="compile" />
+        <dependency org="org.springframework.boot" name="spring-boot-starter-test" rev="${spring-boot.version}" conf="compile" />
+<!--         <dependency org="com.jayway.jsonpath" name="json-path" conf="compile" /> -->
+    </dependencies>
+</ivy-module>

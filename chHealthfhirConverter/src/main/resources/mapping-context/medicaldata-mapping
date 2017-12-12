@@ -1,0 +1,28 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanMedicalDataToFhir" = "eMediplanMedicalDataToFhir"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanMedicalData" as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" as target
+
+imports "http://hl7.org/fhir/StructureMap/eMediplanRiskCategoryToAllergyIntolerance"
+
+group tutorial
+  input source : eMediplanMedicalData as source
+  input target : Observation as target
+
+rule_status: for source make target.status = "final"
+
+//rule_dlstmen: for source.DLstMen make target.code = c("http://snomed.info/sct", "161713000", "Last menstrual period - First day") then {
+//	rule_value: for source.DLstMen as dlstmen make target.value = dlstmen 
+//}
+
+//rule_Prem: for source.Prem as prem where source.Prem = 1 make target as obs then {
+//			rule_obs_code: for prem make obs.code = c("http://snomed.info/sct", "395507008")
+//			rule_obs_value: for prem make obs.value = "<= 18 months"
+//}
+
+//rule_ToG: for source.ToG as tog where source.Prem = 1 make target as obs then {
+//			rule_obs_code: for tog make obs.code = c("http://snomed.info/sct", "412726003")
+//			rule_obs_value: for tog make obs.value = tog
+//}
+
+endgroup

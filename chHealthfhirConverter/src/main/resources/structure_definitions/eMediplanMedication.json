@@ -1,0 +1,149 @@
+{
+	"resourceType": "StructureDefinition",
+	"id": "eMediplanMedication",
+	"extension": [
+		{
+			"url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace",
+			"valueUri": "http://healthfhir.ch/StructureDefinition/eMediplan/16A"
+		}
+	],
+	"meta": {
+		"lastUpdated": "2016-11-21T16:11:04.708+01:00"
+	},
+	"url": "http://hl7.org/fhir/StructureDefinition/eMediplanMedication",
+	"name": "eMediplanMedication",
+	"status": "draft",
+	"kind": "logical",
+	"abstract": "false",
+	"snapshot": {
+		"element": [
+			{
+				"path": "eMediplanMedication",
+				"min": "1",
+				"max": "1"
+			},
+			{
+				"path": "eMediplanMedication.Patient",
+				"min": "1",
+				"max": "1",
+				"type": [
+					{
+						"code": "eMediplanPatient"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.Medicaments",
+				"min": "1",
+				"max": "*",
+				"type": [
+					{
+					    "code": "eMediplanMedicament"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.Recoms",
+				"min": "0",
+				"max": "*",
+				"type": [
+					{
+						"code": "eMediplanRecommendation"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.PFields",
+				"min": "0",
+				"max": "*",
+				"type": [
+					{
+						"code": "eMediplanPrivateField"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.PSchema",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.MedType",
+				"min": "1",
+				"max": "1",
+				"minValueInteger": "1",
+				"maxValueInteger": "3",
+				"type": [
+					{
+						"code": "integer"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.Auth",
+				"min": "1",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.Zsr",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.Dt",
+				"min": "1",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.Rmk",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.ValBy",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedication.ValDat",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			}
+		]
+	}
+}

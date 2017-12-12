@@ -1,0 +1,157 @@
+{
+	"resourceType": "StructureDefinition",
+	"id": "eMediplanPatient",
+	"extension": [
+		{
+			"url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace",
+			"valueUri": "http://healthfhir.ch/StructureDefinition/eMediplan/16A"
+		}
+	],
+	"meta": {
+		"lastUpdated": "2016-11-21T16:11:04.708+01:00"
+	},
+	"url": "http://hl7.org/fhir/StructureDefinition/eMediplanPatient",
+	"name": "eMediplanPatient",
+	"status": "draft",
+	"kind": "logical",
+	"abstract": "false",
+	"snapshot": {
+		"element": [
+			{
+				"path": "eMediplanPatient",
+				"min": "1",
+				"max": "1"
+			},
+			{
+				"path": "eMediplanPatient.FName",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.LName",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.BDt",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.Gender",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "integer"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.Street",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.Zip",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.City",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.Lng",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.Phone",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.Rcv",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.Ids",
+				"min": "0",
+				"max": "*",
+				"type": [
+					{
+						"code": "eMediplanPatientId"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.PFields",
+				"min": "0",
+				"max": "*",
+				"type": [
+					{
+						"code": "eMediplanPrivateField"
+					}
+				]
+			},
+			{
+				"path": "eMediplanPatient.Med",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "eMediplanMedicalData"
+					}
+				]
+			}
+		]
+	}
+}

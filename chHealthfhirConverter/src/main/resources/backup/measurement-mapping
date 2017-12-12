@@ -1,0 +1,32 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanMeasurementToObservation" = "eMediplanMeasurementToObservation"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanMeasurement" as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" as target
+
+group tutorial
+  input source : eMediplanMeasurement as source
+  input target : Observation as target
+
+rule_status: for source make target.status = "final"
+
+rule_value: for source.Val as val make target.valueQuantity as q, q = create("Quantity") then {
+	rule_system: for val make q.system = "http://unitsofmeasure.org"
+	rule_value: for val make q.value = val
+	
+	rule_unit_centimeter: for source.Unit as unit where unit = 1 make q.code = "cm"
+	rule_unit_kilogram: for source.Unit as unit2 where unit2 = 2 make q.code = "kg"
+		
+}
+
+
+rule_type: for source.Type make create("CodableConcept") as coding, target.code = coding then {
+
+	rule_system: for source.Type as t make coding.system = "http://loinc.org"
+	rule_code_body_height: for t as t2 where t = "1" make coding.code = "8302-2"
+	rule_code_body_weight: for t where t = 2 make coding.code = "29463-7"	
+	rule_display_height: for t where t = 1 make coding.display = "Body height"
+	rule_display_weight: for t where t = 2 make coding.display = "Body weight"
+}
+
+
+endgroup

@@ -1,0 +1,67 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanToFhir" = "eMediplanToFhir"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanMedication" as source
+uses "http://hl7.org/fhir/StructureDefinition/CarePlan" as target
+
+imports "http://hl7.org/fhir/StructureMap/eMediplanPatientToFhir"
+imports "http://hl7.org/fhir/StructureMap/eMediplanMedicamentToFhirMedicationRequest"
+imports "http://hl7.org/fhir/StructureMap/eMediplanRiskCategoryToAllergyIntolerance"
+imports "http://hl7.org/fhir/StructureMap/eMediplanMeasurementToObservation"
+
+group eMediplanToFhir
+  input source : eMediplanMedication as source
+  input target : CarePlan as target
+
+rule_CarePlanStatus: for source make target.status = "active"
+rule_CarePlanIntent: for source make target.intent = "order"
+rule_Rmk: for source.Rmk as rmk make target.note as t_note then {
+	rule_rmk2: for rmk make t_note.text = rmk
+}
+
+rule_dt: for source.Dt as dt make target.meta as meta, meta.lastUpdated = dt
+
+rule_Auth: for source.Auth make create("Practitioner") as practitioner, target.author = reference(practitioner) then {
+	
+	rule_1: for source.Auth as author make practitioner.identifier as id then {
+		rule_1_1: for author where author.matches("/([0-9]){13}/g") make id.value = author
+		rule_1_2: for author where author.matches("/([0-9]){13}/g") make id.system = "https://www.medreg.admin.ch"
+		
+		rule_1_3: for author where author.matches("/^[0-9]+(?!0-9)$/g") make practitioner.name as name then {
+			rule_1_3_1: for author make name.text = author
+		}
+	}
+}
+
+rule_Patient: for source.Patient as pat make create("Patient") as fhirPat, target.subject = reference(fhirPat) then {
+	rule_pat_mapping: for pat make fhirPat then patientToFhir(pat, fhirPat)
+
+	rule_Medicaments: for source.Medicaments as meds make create("MedicationRequest") as medReq, target.activity as act then {
+		rule_medReq: for meds make act.reference = reference(medReq), reference(fhirPat) as patRef then medicamentToFhirMedicationRequestWithPatient(meds, patRef, medReq)
+	}
+	
+	rule_MedicalData: for pat.Med as med make target as t then {
+		rule_DLstMen: for med.DLstMen as dlstmen make create("Observation") as obs, t.supportingInfo = reference(obs) then {
+			rule_obs_status: for dlstmen make obs.status = "final"
+			rule_obs_code: for dlstmen make obs.code = cc("http://snomed.info/sct", "161713000")
+			rule_obs_value: for dlstmen make obs.value = dlstmen
+		}
+		
+		rule_Prem: for med.Prem as prem where source.Patient.Med.Prem = 1 make create("Observation") as obs, t.supportingInfo = reference(obs) then {
+			rule_obs_status: for prem make obs.status = "final"
+			rule_obs_code: for prem make obs.code = cc("http://snomed.info/sct", "395507008")
+			rule_obs_value: for prem make obs.value = "<= 18 months"
+		}
+		
+		rule_ToG: for med.ToG as tog where source.Patient.Med.Prem = 1 make create("Observation") as obs, t.supportingInfo = reference(obs) then {
+			rule_obs_code: for tog make obs.code = cc("http://snomed.info/sct", "412726003")
+			rule_obs_value: for tog make obs.value = tog
+		}
+		
+		rule_Rc: for med.Rc as rc make create("AllergyIntolerance") as agy, reference(fhirPat) as patRef, t.supportingInfo = reference(agy) then riskCategoryMappingWithPatient(rc, patRef, agy)
+		
+		rule_Meas: for med.Meas as meas make create("Observation") as obs, t.supportingInfo = reference(obs) then measurementToFhir(meas, obs)
+	}
+}
+
+
+endgroup

@@ -1,0 +1,25 @@
+
+Medication.Recommendations -> append() is not implemented, so the content can not be stored in a annotation. There is also no matching Resource for this kind of information.
+							  Only PMC is involved so the impact on ignoring this info is minimal
+Medication.Author -> contained property didn't work and a bundle would only work with append() for entry property
+
+Measurement.Value und .Unit -> Passend wäre Observation.valueQuantity, Quantities sind jedoch noch nicht implementiert.
+
+
+Posology.D -> siehe Questions 5
+Posology.CyDu -> siehe Bug 8
+Posology.Rep -> siehe Bug 9
+Posology.TT alias TakingTime -> Nicht Möglich, da alle Werte von Bug 9 betroffen sind.
+
+Medicaments.Id -> Bug 11
+Medicaments.IdType -> Bug 11
+Medicaments.DtFrom -> siehe Bug 7
+Medicaments.DtTo -> siehe Bug 7
+
+RiskCategory.IdType -> Ignoriert, da AllergyIntolerance.category zwar passen würde, jedoch ein required ValueSet besitzt.
+					   Der Wert dieses Attributes ist ohnehin fraglich.
+					   Ein Mapping ann eine andere Stelle wäre problemlos möglich.
+					   
+MedicalData.Prem -> siehe Measurement.Value
+
+

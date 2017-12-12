@@ -1,0 +1,88 @@
+{
+  "resourceType": "CodeSystem",
+  "id": "eMediplanRiskTypeCodeSystem",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/StructureDefinition/eMediplanRiskTypeCodeSystem"
+    ]
+  },
+  "url": "http://hl7.org/fhir/CodeSystem/eMediplanRiskTypeCodeSystem",
+  "identifier": {
+    "system": "http://hl7.org/fhir/CodeSystem/eMediplanRiskTypeCodeSystem",
+    "value": "risk-types"
+  },
+  "version": "0.1",
+  "name": "eMediplan risk type",
+  "status": "draft",
+  "experimental": true,
+  "description": "The type of a risk",
+  "caseSensitive": true,
+  "content": "complete",
+  "concept": [
+    {
+      "code": "597",
+     "display": "Niereninsuffizienz, terminale (Clcr <15 ml/min)",
+      "definition": "Niereninsuffizienz, terminale (Clcr <15 ml/min)"
+    },
+    {
+      "code": "575",
+     "display": "Niereninsuffizienz, schwere (Clcr 15–30 ml/min)",
+      "definition": "Niereninsuffizienz, schwere (Clcr 15–30 ml/min)"
+    },
+    {
+      "code": "576",
+      "display": "Niereninsuffizienz, mittelschwere (Clcr 30–60 ml/min)",
+      "definition": "Niereninsuffizienz, mittelschwere (Clcr 30–60 ml/min)"
+    },
+    {
+      "code": "577",
+      "display": "Niereninsuffizienz, leichte (Clcr 60–90 ml/min)",
+      "definition": "Niereninsuffizienz, leichte (Clcr 60–90 ml/min)"
+    },
+    {
+      "code": "572",
+      "display": "Leberinsuffizienz, schwere (Child-Pugh C)",
+      "definition": "Leberinsuffizienz, schwere (Child-Pugh C)"
+    },
+    {
+      "code": "573",
+      "display": "Leberinsuffizienz, mittelschwere (Child-Pugh B)",
+      "definition": "Leberinsuffizienz, mittelschwere (Child-Pugh B)"
+    },
+    {
+      "code": "574",
+      "display": "Leberinsuffizienz, leichte (Child-Pugh A)",
+      "definition": "Leberinsuffizienz, leichte (Child-Pugh A)"
+    },
+    {
+      "code": "78",
+      "display": "Schwangerschaft",
+      "definition": "Schwangerschaft"
+    },
+    {
+      "code": "77",
+      "display": "Stillzeit",
+      "definition": "Stillzeit"
+    },
+    {
+      "code": "612",
+      "display": "Frauen im gebärfähigen Alter",
+      "definition": "Frauen im gebärfähigen Alter"
+    },
+    {
+      "code": "613",
+      "display": "Zeugungsfähige Männer",
+      "definition": "Zeugungsfähige Männer"
+    },
+    {
+      "code": "580",
+      "display": "Leistungssportler",
+      "definition": "Leistungssportler"
+    },
+    {
+      "code": "615",
+      "display": "Potenziell gefährlichen Situationen ausgesetzt, wie beispielsweise dem Führen von Fahrzeugen, dem Bedienen von Maschinen oder dem Arbeiten in grossen Höhen",
+      "definition": "Potenziell gefährlichen Situationen ausgesetzt, wie beispielsweise dem Führen von Fahrzeugen, dem Bedienen von Maschinen oder dem Arbeiten in grossen Höhen"
+    }
+  ]
+}

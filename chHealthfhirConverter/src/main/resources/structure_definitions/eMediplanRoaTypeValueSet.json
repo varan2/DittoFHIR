@@ -1,0 +1,34 @@
+{
+  "resourceType": "ValueSet",
+  "id": "CDTYPE26-extensional",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/StructureDefinition/shareablevalueset"
+    ]
+  },
+  "url": "http://hl7.org/fhir/ValueSet/eMediplanRoaTypeValueSet",
+  "identifier": [
+    {
+      "system": "https://index.hcisolutions.ch/index/current/get.aspx?schema=CODE&keytype=CDTYP&key=26",
+      "value": "CDTYPE26"
+    }
+  ],
+  "status": "draft",
+  "experimental": true,
+  "compose": {
+    "lockedDate": "2017-06-13",
+    "inactive": true,
+    "include": [
+      {
+        "system": "http://hl7.org/fhir/CodeSystem/eMediplanRoaTypeCodeSystem",
+        "version": "current",
+        "concept": [
+          {
+            "code": "PO",
+            "display": "PO"
+          }
+        ]
+      }
+    ]
+  }
+}

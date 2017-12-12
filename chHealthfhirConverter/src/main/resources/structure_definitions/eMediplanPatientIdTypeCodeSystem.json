@@ -1,0 +1,28 @@
+{
+  "resourceType": "CodeSystem",
+  "id": "eMediplanPatientIdTypeCodeSystem",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/StructureDefinition/eMediplanPatientIdTypeCodeSystem"
+    ]
+  },
+  "url": "http://hl7.org/fhir/CodeSystem/eMediplanPatientIdTypeCodeSystem",
+  "identifier": {
+    "system": "http://hl7.org/fhir/CodeSystem/eMediplanPatientIdTypeCodeSystem",
+    "value": "patient-id-types"
+  },
+  "version": "0.1",
+  "name": "eMediplan patient id type",
+  "status": "draft",
+  "experimental": true,
+  "description": "The type of a patient id",
+  "caseSensitive": true,
+  "content": "complete",
+  "concept": [
+    {
+      "code": "1",
+      "display": "Insurance card number",
+      "definition": "Insurance card number"
+    }
+  ]
+}

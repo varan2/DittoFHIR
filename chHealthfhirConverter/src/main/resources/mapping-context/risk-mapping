@@ -1,0 +1,30 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanRiskCategoryToAllergyIntolerance" = "eMediplanRiskCategoryToAllergyIntolerance"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanRiskCategory" as source
+uses "http://hl7.org/fhir/StructureDefinition/Reference" as source
+uses "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance" as target
+
+group riskCategoryMapping
+  input source : eMediplanRiskCategory as source
+  input target : AllergyIntolerance as target
+
+rule_status: for source make target.verificationStatus = "confirmed"
+
+rule_code: for source.R as risk where source.R.count() > 0 make target.code = cc("http://hl7.org/fhir/CodeSystem/eMediplanRiskTypeCodeSystem", risk)
+rule_code2: for source.Id as risk where source.R.count() = 0 make target.code = cc("http://hl7.org/fhir/CodeSystem/eMediplanRiskCategoryTypeCodeSystem", risk)
+
+endgroup
+
+group riskCategoryMappingWithPatient
+  input source : eMediplanRiskCategory as source
+  input patRef : Reference as source
+  input target : AllergyIntolerance as target
+
+rule_status: for source make target.verificationStatus = "confirmed"
+
+rule_code: for source.R as risk where source.R.count() > 0 make target.code = cc("http://hl7.org/fhir/CodeSystem/eMediplanRiskTypeCodeSystem", risk)
+rule_code2: for source.Id as risk where source.R.count() = 0 make target.code = cc("http://hl7.org/fhir/CodeSystem/eMediplanRiskCategoryTypeCodeSystem", risk)
+
+rule_patRef: for patRef as pat make target.patient = pat
+
+endgroup

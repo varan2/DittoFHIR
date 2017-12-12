@@ -1,0 +1,20 @@
+<ivysettings>
+	<include file="../fhir-svn/ivysettings.xml" />
+	<settings defaultResolver="chain" />
+	<resolvers>
+		<!-- NOTE: You should declare only repositories that you need here -->
+		<ibiblio name="spring-release" m2compatible="true"
+			root="http://repo.spring.io/release" />
+		<ibiblio name="spring-milestones" m2compatible="true"
+			root="http://repo.spring.io/milestone" />
+		<ibiblio name="spring-snapshots" m2compatible="true"
+			root="http://repo.spring.io/snapshot" />
+		<chain name="chain" returnFirst="true">
+			<resolver ref="spring-release" />
+			<resolver ref="spring-milestones" />
+			<resolver ref="spring-snapshots" />
+			<resolver ref="maven" />
+			<resolver ref="bintray" />
+		</chain>
+	</resolvers>
+</ivysettings>

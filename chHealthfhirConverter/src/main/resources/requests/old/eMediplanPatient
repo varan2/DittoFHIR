@@ -1,0 +1,59 @@
+http://localhost:8080/Patient
+
+{
+					"BDt": "1981-01-12",
+					"City": "Bern",
+					"FName": "Maxima",
+					"Gender": 2,
+					"LName": "Matter",
+					"Lng": "DE",
+					"Ids": [{
+								"Type": 1,
+								"Val": "asdf-asdf-asdf-asdf"
+							},
+							{
+								"Type": 1,
+								"Val": "asdf2-asdf2-asdf2-asdf2"
+							}]
+					"Med": {
+								"DLstMen": "",
+								"Meas": [
+											{
+												"Type": 1,
+												"Unit": 2,
+												"Val": "53"
+											}, 
+											{
+												"Type": 2,
+												"Unit": 1,
+												"Val": "158"
+											}
+										],
+								"Rc": [
+										{
+											"Id": 1,
+											"R": [ 577 ]
+										},
+										{
+											"Id": 2 
+										},
+										{
+											"Id": 3,
+											"R": [ 612 ]
+										},
+										{
+											"Id": 4
+										},
+										{
+											"Id": 5
+										}, 
+										{
+											"Id": 6,
+											"R": [ 555, 571 ]
+										} 
+									]
+							},
+							"Phone": "+4158 851 2600",
+							"Street": "Untermattweg 8",
+							"Zip": "3027"
+				}

@@ -1,0 +1,14 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanPatientIdToIdentifier" = "eMediplanPatientIdToIdentifier"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanPatientId" as source
+uses "http://hl7.org/fhir/StructureDefinition/Identifier" as target
+
+group patientIdToFhir
+  input source : eMediplanPatientId as source
+  input target : Identifier as target
+
+rule_1: for source.Val as v make target.value = v
+rule_2: for source.Type as t make target.type = translate(t, "http://hl7.org/fhir/ConceptMap/eMediplanPatientIdType-v2Identifier", 'CodeableConcept')
+
+
+endgroup

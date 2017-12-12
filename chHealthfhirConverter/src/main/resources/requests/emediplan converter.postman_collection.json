@@ -1,0 +1,145 @@
+{
+	"variables": [],
+	"info": {
+		"name": "emediplan converter",
+		"_postman_id": "53e90ab1-05e0-a43d-9448-03291e5efc1a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/eMediplan",
+			"request": {
+				"url": "http://localhost:8080/eMediplan",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"Auth\": \"7601003178999\",\r\n\t\"Dt\": \"2016-09-12T11:46:09+02:00\",\r\n\t\"Id\": \"26d3dff7-ab05-4737-a49c-5eccd33595f6\",\r\n\t\"MedType\": 1,\r\n\t\"Recoms\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"Id\": \"1\",\r\n\t\t\t\t\t\"PatAgr\": 0,\r\n\t\t\t\t\t\"Rmk\": \"test Rmk1\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"Id\": \"2\",\r\n\t\t\t\t\t\"PatAgr\": 1,\r\n\t\t\t\t\t\"Rmk\": \"test Rmk2\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"Id\": \"3\",\r\n\t\t\t\t\t\"PatAgr\": 0,\r\n\t\t\t\t\t\"Rmk\": \"test Rmk3\"\r\n\t\t\t\t}\r\n\t],\r\n\t\"Medicaments\": [ \r\n\t\t\t\t\t\t{ \r\n\t\t\t\t\t\t\t\"Id\": \"971867\",\r\n\t\t\t\t\t\t\t\"IdType\": 3,\r\n\t\t\t\t\t\t\t\"Pos\": [\r\n\t\t\t\t\t\t\t\t\t\t{ \"D\": [ 0, 0, 0, 0 ],\r\n\t\t\t\t\t\t\t\t\t\t  \"DtFrom\": \"2016-09-12\" \r\n\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t], \r\n\t\t\t\t\t\t\t\"Roa\": \"PO\",\r\n\t\t\t\t\t\t\t\"TkgRsn\": \"Akne\",\r\n\t\t\t\t\t\t\t\"Unit\": \"STK\"\r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t{ \r\n\t\t\t\t\t\t\t\"Id\": \"4461382\",\r\n\t\t\t\t\t\t\t\"IdType\": 3,\r\n\t\t\t\t\t\t\t\"Pos\": [ \r\n\t\t\t\t\t\t\t\t\t\t{ \r\n\t\t\t\t\t\t\t\t\t\t\t\"D\": [ 0, 1, 0, 0 ], \r\n\t\t\t\t\t\t\t\t\t\t\t\"DtFrom\": \"2016-02-10\"\r\n\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"Roa\": \"PO\",\r\n\t\t\t\t\t\t\t\"TkgRsn\": \"Blutverdünnung\",\r\n\t\t\t\t\t\t\t\"Unit\": \"STK\"\r\n\t\t\t\t\t\t}, \r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"Id\": \"2355687\",\r\n\t\t\t\t\t\t\t\"IdType\": 3,\r\n\t\t\t\t\t\t\t\"Pos\": [\r\n\t\t\t\t\t\t\t\t\t\t{ \r\n\t\t\t\t\t\t\t\t\t\t\t\"D\": [ 1, 0, 1, 0 ],\r\n\t\t\t\t\t\t\t\t\t\t\t\"DtFrom\": \"2016-02-10\"\r\n\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t], \r\n\t\t\t\t\t\t\t\"Roa\": \"PO\",\r\n\t\t\t\t\t\t\t\"TkgRsn\": \"Bluthochdruck/Herz\",\r\n\t\t\t\t\t\t\t\"Unit\": \"STK\" \r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t{ \r\n\t\t\t\t\t\t\t\"Id\": \"1426310\",\r\n\t\t\t\t\t\t\t\"IdType\": 3,\r\n\t\t\t\t\t\t\t\"Pos\": [\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"D\": [ 0, 0, 1, 0 ],\r\n\t\t\t\t\t\t\t\t\t\t\t\"DtFrom\": \"2016-02-10\"\r\n\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"Roa\": \"PO\",\r\n\t\t\t\t\t\t\t\"TkgRsn\": \"Cholesterinsenker\",\r\n\t\t\t\t\t\t\t\"Unit\": \"STK\"\r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"Id\": \"809693\",\r\n\t\t\t\t\t\t\t\"IdType\": 3,\r\n\t\t\t\t\t\t\t\"Pos\": [\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"D\": [ 1, 0, 0, 0 ],\r\n\t\t\t\t\t\t\t\t\t\t\t\"DtFrom\": \"2016-02-10\"\r\n\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"Roa\": \"PO\",\r\n\t\t\t\t\t\t\t\"TkgRsn\": \"Bluthochdruck/Wasser\",\r\n\t\t\t\t\t\t\t\"Unit\": \"STK\"\r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"Id\": \"1551274\",\r\n\t\t\t\t\t\t\t\"IdType\": 3,\r\n\t\t\t\t\t\t\t\"Pos\": [\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"D\": [ 1, 0, 0, 0 ],\r\n\t\t\t\t\t\t\t\t\t\t\t\"DtFrom\": \"2016-02-10\"\r\n\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"Roa\": \"PO\",\r\n\t\t\t\t\t\t\t\"TkgRsn\": \"Bluthochdruck/Wasser\",\r\n\t\t\t\t\t\t\t\"Unit\": \"STK\"\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t], \r\n\t\"Patient\": {\r\n\t\t\t\t\t\"BDt\": \"1981-01-12\",\r\n\t\t\t\t\t\"City\": \"Bern\",\r\n\t\t\t\t\t\"FName\": \"Maxima\",\r\n\t\t\t\t\t\"Gender\": 2,\r\n\t\t\t\t\t\"LName\": \"Matter\",\r\n\t\t\t\t\t\"Lng\": \"DE\",\r\n\t\t\t\t\t\"Med\": {\r\n\t\t\t\t\t\t\t\t\"DLstMen\": \"2017-01-17\",\r\n\t\t\t\t\t\t\t\t\"Prem\": 1,\r\n\t\t\t\t\t\t\t\t\"ToG\": \"18-6\",\r\n\t\t\t\t\t\t\t\t\"Meas\": [\r\n\t\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Type\": 1,\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Unit\": 2,\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Val\": \"53\"\r\n\t\t\t\t\t\t\t\t\t\t\t}, \r\n\t\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Type\": 2,\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Unit\": 1,\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Val\": \"158\"\r\n\t\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\t\"Rc\": [\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 1,\r\n\t\t\t\t\t\t\t\t\t\t\t\"R\": [ 577 ]\r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 2 \r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 3,\r\n\t\t\t\t\t\t\t\t\t\t\t\"R\": [ 612 ]\r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 4\r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 5\r\n\t\t\t\t\t\t\t\t\t\t}, \r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 6,\r\n\t\t\t\t\t\t\t\t\t\t\t\"R\": [ 555, 571 ]\r\n\t\t\t\t\t\t\t\t\t\t} \r\n\t\t\t\t\t\t\t\t\t]\r\n\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\"Phone\": \"+4158 851 2600\",\r\n\t\t\t\t\t\t\t\"Street\": \"Untermattweg 8\",\r\n\t\t\t\t\t\t\t\"Zip\": \"3027\"\r\n\t\t\t\t},\r\n\t\"Rmk\": \"test rmk\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/PatientId",
+			"request": {
+				"url": "http://localhost:8080/PatientId",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Type\": 1,\n\t\"Val\": \"1234-5678-9abc-def1\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/Measurement",
+			"request": {
+				"url": "http://localhost:8080/Measurement",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Type\": 1,\n\t\"Val\": \"23.56\",\n\t\"Unit\": 2\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/Medicament",
+			"request": {
+				"url": "http://localhost:8080/Medicament",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\t\t\t\t\t\t\"Id\": \"971867\",\r\n\t\t\t\t\t\t\t\"IdType\": 3,\r\n\t\t\t\t\t\t\t\"AppInstr\": \"asdfasdfasdf\",\r\n\t\t\t\t\t\t\t\"Pos\": [\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t  \"InRes\": 1\r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t  \"InRes\": 0\r\n\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t], \r\n\t\t\t\t\t\t\t\"Roa\": \"PO\",\r\n\t\t\t\t\t\t\t\"TkgRsn\": \"Akne\",\r\n\t\t\t\t\t\t\t\"Unit\": \"STK\",\r\n\t\t\t\t\t\t\t\"Subs\": 1,\r\n\t\t\t\t\t\t\t\"AutoMed\": 1\r\n\t\t\t\t\t\t}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/RiskCategory",
+			"request": {
+				"url": "http://localhost:8080/RiskCategory",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"Id\": 1,\r\n\t\"R\": 597\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Only for Dev http://localhost:8080/MedicalData",
+			"request": {
+				"url": "http://localhost:8080/MedicalData",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"DLstMen\": \"2017-11-10\",\n\t\"Prem\": 1,\n\t\"ToG\": \"9-3\",\n\t\"Rc\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/Patient",
+			"request": {
+				"url": "http://localhost:8080/Patient",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\t\t\"BDt\": \"1981-01-12\",\r\n\t\t\t\t\t\"City\": \"Bern\",\r\n\t\t\t\t\t\"FName\": \"Maxima\",\r\n\t\t\t\t\t\"Gender\": 2,\r\n\t\t\t\t\t\"LName\": \"Matter\",\r\n\t\t\t\t\t\"Lng\": \"DE\",\r\n\t\t\t\t\t\"Ids\": [{\r\n\t\t\t\t\t\t\t\t\"Type\": 1,\r\n\t\t\t\t\t\t\t\t\"Val\": \"asdf-asdf-asdf-asdf\"\r\n\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\"Type\": 1,\r\n\t\t\t\t\t\t\t\t\"Val\": \"asdf2-asdf2-asdf2-asdf2\"\r\n\t\t\t\t\t\t\t}],\r\n\t\t\t\t\t\"Med\": {\r\n\t\t\t\t\t\t\t\t\"DLstMen\": \"\",\r\n\t\t\t\t\t\t\t\t\"Meas\": [\r\n\t\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Type\": 1,\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Unit\": 2,\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Val\": \"53\"\r\n\t\t\t\t\t\t\t\t\t\t\t}, \r\n\t\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Type\": 2,\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Unit\": 1,\r\n\t\t\t\t\t\t\t\t\t\t\t\t\"Val\": \"158\"\r\n\t\t\t\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\t\"Rc\": [\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 1,\r\n\t\t\t\t\t\t\t\t\t\t\t\"R\": [ 577 ]\r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 2 \r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 3,\r\n\t\t\t\t\t\t\t\t\t\t\t\"R\": [ 612 ]\r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 4\r\n\t\t\t\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 5\r\n\t\t\t\t\t\t\t\t\t\t}, \r\n\t\t\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\t\t\"Id\": 6,\r\n\t\t\t\t\t\t\t\t\t\t\t\"R\": [ 555, 571 ]\r\n\t\t\t\t\t\t\t\t\t\t} \r\n\t\t\t\t\t\t\t\t\t]\r\n\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\"Phone\": \"+4158 851 2600\",\r\n\t\t\t\t\t\t\t\"Street\": \"Untermattweg 8\",\r\n\t\t\t\t\t\t\t\"Zip\": \"3027\"\r\n\t\t\t\t}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

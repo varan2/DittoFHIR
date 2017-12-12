@@ -1,0 +1,53 @@
+{
+  "resourceType": "CodeSystem",
+  "id": "eMediplanRiskCategoryTypeCodeSystem",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/StructureDefinition/eMediplanRiskCategoryTypeCodeSystem"
+    ]
+  },
+  "url": "http://hl7.org/fhir/CodeSystem/eMediplanRiskCategoryTypeCodeSystem",
+  "identifier": {
+    "system": "http://hl7.org/fhir/CodeSystem/eMediplanRiskCategoryTypeCodeSystem",
+    "value": "risk-types"
+  },
+  "version": "0.1",
+  "name": "eMediplan risk type",
+  "status": "draft",
+  "experimental": true,
+  "description": "The type of a risk",
+  "caseSensitive": true,
+  "content": "complete",
+  "concept": [
+    {
+      "code": "1",
+      "display": "Renal Insufficiency",
+      "definition": "Renal Insufficiency"
+    },
+    {
+      "code": "2",
+     "display": "Liver Insufficiency",
+      "definition": "Liver Insufficiency"
+    },
+    {
+      "code": "3",
+      "display": "Reproduction",
+      "definition": "Reproduction"
+    },
+    {
+      "code": "4",
+      "display": "Competitive athlete",
+      "definition": "Competitive athlete"
+    },
+    {
+      "code": "5",
+      "display": "Driver",
+      "definition": "Driver"
+    },
+    {
+      "code": "6",
+      "display": "Allergies",
+      "definition": "Allergies"
+    }
+  ]
+}

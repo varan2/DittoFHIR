@@ -1,0 +1,29 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanToFhir" = "eMediplanToFhir"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanMedication" as source
+uses "http://hl7.org/fhir/StructureDefinition/CarePlan" as target
+
+group tutorial
+  input source : eMediplanMedication as source
+  input target : CarePlan as target
+
+rule_CarePlanStatus: for source make target.status = "active"
+rule_CarePlanIntent: for source make target.intent = "order"
+rule_Recommendation: for source.Recoms as s_recoms make target.note as t_note then {
+	rule_id_1: for s_recoms.Id as id where id = "1" make create("string") as id_text then {
+		rule_id_1_1: for s_recoms.Id as id make id_text : string = "Id 1 = week dosing system by the pharmacist"
+		rule_Rmk: for s_recoms.Rmk as appendix make id_text as note then {
+			rule_rmk2: for appendix make t_note.text = append(id_text, appendix)
+		}
+	}
+	rule_id_2: for s_recoms.Id as id where id = 2 make t_note.text = "Id: 2 = Intensified compliance support\r\n"
+	rule_id_3: for s_recoms.Id as id where id = 3 make t_note.text = "Id: 3 = Repeat check in ... months\r\n"
+	rule_id_4: for s_recoms.Id as id where id = 4 make t_note.text = "Id: 4 = Forwarding to doctor / other specialist\r\n"
+	rule_id_5: for s_recoms.Id as id where id = 5 make t_note.text = "Id: 5 = Needs analysis (e.g., interactions, side effects, duplications)\r\n"
+	
+	
+}
+
+
+
+endgroup

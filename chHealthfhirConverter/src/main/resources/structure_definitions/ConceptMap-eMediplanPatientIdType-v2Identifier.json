@@ -1,0 +1,32 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "eMediplanPatientIdType-v2Identifier",
+  "url": "http://hl7.org/fhir/ConceptMap/eMediplanPatientIdType-v2Identifier",
+  "name": "eMediplanPatientIdType-v2Identifier",
+  "title": "eMediplanPatientIdType-v2Identifier mapping",
+  "status": "active",
+  "experimental": true,
+  "description": "A mapping between the eMediplan Patient Id Type and Fhir Code systems",
+  "purpose": "To help implementers map from eMediplan to FHIR",
+  "copyright": "Kevin Tippenhauer, all rights reserved",
+  "sourceUri": "http://hl7.org/fhir/CodeSystem/eMediplanPatientIdTypeCodeSystem",
+  "targetUri": "http://hl7.org/fhir/v2/0203",
+  "group": [
+    {
+      "source": "http://hl7.org/fhir/CodeSystem/eMediplanPatientIdTypeCodeSystem",
+      "target": "http://hl7.org/fhir/v2/0203",
+      "element": [
+        {
+          "code": "1",
+          "display": "Insurance card number",
+          "target": [
+            {
+              "code": "HC",
+              "display": "Health Card Number"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+http://localhost:8080/eMediplan
+
+{ 
+	"Auth": "7601003178999",
+	"Dt": "2016-09-12T11:46:09+02:00",
+	"Id": "26d3dff7-ab05-4737-a49c-5eccd33595f6",
+	"MedType": 1,
+	"Recoms": [
+				{
+					"Id": "1",
+					"PatAgr": 0,
+					"Rmk": "test Rmk"
+				}
+	],
+	"Medicaments": [ 
+						{ 
+							"Id": "971867",
+							"IdType": 3,
+							"Pos": [
+										{ "D": [ 0, 0, 0, 0 ],
+										  "DtFrom": "2016-09-12" 
+										}
+									], 
+							"Roa": "PO",
+							"TkgRsn": "Akne",
+							"Unit": "STK"
+						},
+						{ 
+							"Id": "4461382",
+							"IdType": 3,
+							"Pos": [ 
+										{ 
+											"D": [ 0, 1, 0, 0 ], 
+											"DtFrom": "2016-02-10"
+										}
+									],
+							"Roa": "PO",
+							"TkgRsn": "Blutverdünnung",
+							"Unit": "STK"
+						}, 
+						{
+							"Id": "2355687",
+							"IdType": 3,
+							"Pos": [
+										{ 
+											"D": [ 1, 0, 1, 0 ],
+											"DtFrom": "2016-02-10"
+										}
+									], 
+							"Roa": "PO",
+							"TkgRsn": "Bluthochdruck/Herz",
+							"Unit": "STK" 
+						},
+						{ 
+							"Id": "1426310",
+							"IdType": 3,
+							"Pos": [
+										{
+											"D": [ 0, 0, 1, 0 ],
+											"DtFrom": "2016-02-10"
+										}
+									],
+							"Roa": "PO",
+							"TkgRsn": "Cholesterinsenker",
+							"Unit": "STK"
+						},
+						{
+							"Id": "809693",
+							"IdType": 3,
+							"Pos": [
+										{
+											"D": [ 1, 0, 0, 0 ],
+											"DtFrom": "2016-02-10"
+										}
+									],
+							"Roa": "PO",
+							"TkgRsn": "Bluthochdruck/Wasser",
+							"Unit": "STK"
+						},
+						{
+							"Id": "1551274",
+							"IdType": 3,
+							"Pos": [
+										{
+											"D": [ 1, 0, 0, 0 ],
+											"DtFrom": "2016-02-10"
+										}
+									],
+							"Roa": "PO",
+							"TkgRsn": "Bluthochdruck/Wasser",
+							"Unit": "STK"
+						}
+					], 
+	"Patient": {
+					"BDt": "1981-01-12",
+					"City": "Bern",
+					"FName": "Maxima",
+					"Gender": 2,
+					"LName": "Matter",
+					"Lng": "DE",
+					"Med": {
+								"DLstMen": "",
+								"Meas": [
+											{
+												"Type": 1,
+												"Unit": 2,
+												"Val": "53"
+											}, 
+											{
+												"Type": 2,
+												"Unit": 1,
+												"Val": "158"
+											}
+										],
+								"Rc": [
+										{
+											"Id": 1,
+											"R": [ 577 ]
+										},
+										{
+											"Id": 2 
+										},
+										{
+											"Id": 3,
+											"R": [ 612 ]
+										},
+										{
+											"Id": 4
+										},
+										{
+											"Id": 5
+										}, 
+										{
+											"Id": 6,
+											"R": [ 555, 571 ]
+										} 
+									]
+							},
+							"Phone": "+4158 851 2600",
+							"Street": "Untermattweg 8",
+							"Zip": "3027"
+				},
+	"Rmk": ""
+}

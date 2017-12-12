@@ -1,0 +1,7 @@
+http://localhost:8080/Measurement
+
+{
+	"Type": 1,
+	"Val": "23.56",
+	"Unit": 2
+}

@@ -1,0 +1,18 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanMeasurementToObservation" = "eMediplanMeasurementToObservation"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanMeasurement" as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" as target
+
+group tutorial
+  input source : eMediplanMeasurement as source
+  input target : Observation as target
+
+rule_status: for source make target.status = "final"
+
+rule_type_height: for source.Type as t where source.Type = 1 make cc("http://loinc.org", "8302-2", "Body height") as coding, target.code = coding
+rule_type_weight: for source.Type as t where source.Type = 2 make cc("http://loinc.org", "29463-7", "Body weight") as coding, target.code = coding
+
+rule_unit_cm: for source.Unit as u, source.Val as v where source.Unit = 1 make qty(v, "cm", "http://unitsofmeasure.org") as qty, target.valueQuantity = qty
+rule_unit_kg: for source.Type as t, source.Val as v where source.Type = 2 make qty(v, "kg", "http://unitsofmeasure.org") as qty, target.valueQuantity = qty
+
+endgroup

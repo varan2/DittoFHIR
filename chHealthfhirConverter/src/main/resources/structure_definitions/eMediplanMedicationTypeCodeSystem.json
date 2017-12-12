@@ -1,0 +1,38 @@
+{
+  "resourceType": "CodeSystem",
+  "id": "eMediplanMedicationTypeCodeSystem",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/StructureDefinition/eMediplanMedicationTypeCodeSystem"
+    ]
+  },
+  "url": "http://hl7.org/fhir/CodeSystem/eMediplanMedicationTypeCodeSystem",
+  "identifier": {
+    "system": "http://emediplan.ch/de/it-und-ehealth/spezifikationen",
+    "value": "medication-types"
+  },
+  "version": "0.1",
+  "name": "eMediplan medication type",
+  "status": "draft",
+  "experimental": true,
+  "description": "The type of medication objects in a eMediplan medication object",
+  "caseSensitive": true,
+  "content": "complete",
+  "concept": [
+    {
+      "code": "1",
+      "display": "MP",
+      "definition": "Medication plan"
+    },
+    {
+      "code": "2",
+      "display": "PMC",
+      "definition": "Polymedication check"
+    },
+    {
+      "code": "3",
+      "display": "Px",
+      "definition": "Prescription"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+	"resourceType": "StructureDefinition",
+	"eMediplanMedicalData": "eMediplanMedicament",
+	"extension": [
+		{
+			"url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace",
+			"valueUri": "http://healthfhir.ch/StructureDefinition/eMediplan/16A"
+		}
+	],
+	"meta": {
+		"lastUpdated": "2016-11-21T16:11:04.708+01:00"
+	},
+	"url": "http://healthfhir.ch/StructureDefinition/eMediplan/16A/eMediplanMedicament",
+	"name": "eMediplanMedicament",
+	"status": "draft",
+	"kind": "logical",
+	"abstract": "false",
+	"snapshot": {
+		"element": [
+			{
+				"path": "eMediplanMedicament",
+				"min": "1",
+				"max": "1"
+			},
+			{
+				"path": "eMediplanMedicament.Id",
+				"min": "1",
+				"max": "1",
+				"type": [
+					{
+						"code": "integer"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.R",
+				"min": "0",
+				"max": "*",
+				"type": [
+					{
+						"code": "integer"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.Pos",
+				"min": "0",
+				"max": "*",
+				"type": [
+					{
+						"code": "StructureDefinition",
+						"targetProfile": "http://healthfhir.ch/StructureDefinition/eMediplan/16A/eMediplanPosology"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.Unit",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.TkgRsn",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.AppInstr",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.AutoMed",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "integer"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.PrscbBy",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.Roa",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "string"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.Rep",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "integer"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.Subs",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "integer"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.NbPack",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "integer"
+					}
+				]
+			},
+			{
+				"path": "eMediplanMedicament.PFields",
+				"min": "0",
+				"max": "*",
+				"type": [
+					{
+						"code": "StructureDefinition",
+						"targetProfile": "http://healthfhir.ch/StructureDefinition/eMediplan/16A/eMediplanPrivateField"
+					}
+				]
+			}
+		]
+	}
+}

@@ -1,0 +1,103 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanMedicamentToFhirMedicationRequest" = "eMediplanMedicamentToFhirMedicationRequest"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanMedicament" as source
+uses "http://hl7.org/fhir/StructureDefinition/MedicationRequest" as target
+uses "http://hl7.org/fhir/StructureDefinition/Reference" as source
+
+group medicamentToFhirMedicationRequest
+  input source : eMediplanMedicament as source
+  input target : MedicationRequest as target
+
+rule_status: for source make target.status = "active"
+rule_intent: for source make target.intent = "order"
+rule_category: for source make target.category = cc("http://hl7.org/fhir/medication-request-category", "community")
+
+rule_requester: for source.PrscbBy as prscBy make create("Practitioner") as requester, target.requester = reference(requester) then {
+	rule_id: for prscBy make requester.identifier as id then {
+		rule_1_1: for prscBy where author.matches("/([0-9]){13}/g") make id.value = prscBy
+		rule_1_2: for prscBy where author.matches("/([0-9]){13}/g") make id.system = "https://www.medreg.admin.ch"
+		
+		rule_1_2: for prscBy where author.matches("/^[0-9]+(?!0-9)$/g") make id.value = prscBy
+	}
+	
+	rule_test: for source make target.contained = requester
+}
+
+rule_tkgRsn: for source.TkgRsn as tkgRsn make create("Observation") as obs, target.reasonReference = reference(obs) then {
+	rule_obs_status: for tkgRsn make obs.status = "final"
+	rule_obs_value: for tkgRsn make obs.value = tkgRsn
+}
+
+rule_pos: for source.Pos as pos make target.dosageInstruction as dosage then {
+	rule_dosageIntr: for source.AppInstr as appInstr make dosage.patientInstruction = appInstr
+	
+	rule_InRes_true: for pos.InRes as res where pos.InRes = 1 make dosage.asNeeded = true
+	rule_InRes_false: for pos.InRes as res where pos.InRes = 0 make dosage.asNeeded = false
+	
+	rule_Roa: for source.Roa as roa make cc("http://index.hcisolutions.ch/index/current/get.aspx?schema=CODE&keytype=CDTYP&key=26", roa) as t, dosage.route = t
+}
+
+rule_substitution: for source.Subs as subs make target.substitution as substitution then {
+	
+	rule_true: for subs where subs = 1 make substitution.allowed = true
+	rule_false: for subs where subs = 0 make substitution.allowed = false
+}
+
+rule_dispense: for source.NbPack as nbpack make target.dispenseRequest as req, req.quantity as q then {
+	rule_nbpack: for nbpack make q.value = nbpack
+	rule_unit: for nbpack make q.unit = "Package"
+}
+
+rule_Note: for source.AutoMed as am where source.AutoMed = 1 make target.note = create("Annotation") as anno then {
+	rule_note2: for am make anno.text = "This is an auto medication."
+}	
+endgroup
+
+group medicamentToFhirMedicationRequestWithPatient
+  input source : eMediplanMedicament as source
+  input patRef : Reference as source
+  input target : MedicationRequest as target
+
+rule_status: for source make target.status = "active"
+rule_intent: for source make target.intent = "order"
+rule_subject: for patRef make target.subject = patRef
+rule_category: for source make target.category = cc("http://hl7.org/fhir/medication-request-category", "community")
+
+rule_requester: for source.PrscbBy as prscBy make create("Practitioner") as requester, target.requester = reference(requester) then {
+	rule_id: for prscBy make requester.identifier as id then {
+		rule_1_1: for prscBy where author.matches("/([0-9]){13}/g") make id.value = prscBy
+		rule_1_2: for prscBy where author.matches("/([0-9]){13}/g") make id.system = "https://www.medreg.admin.ch"
+		
+		rule_1_2: for prscBy where author.matches("/^[0-9]+(?!0-9)$/g") make id.value = prscBy
+	}
+}
+
+rule_tkgRsn: for source.TkgRsn as tkgRsn make create("Observation") as obs, target.reasonReference = reference(obs) then {
+	rule_obs_status: for tkgRsn make obs.status = "final"
+	rule_obs_value: for tkgRsn make obs.value = tkgRsn
+}
+
+rule_pos: for source.Pos as pos make target.dosageInstruction as dosage then {
+	rule_dosageIntr: for source.AppInstr as appInstr make dosage.patientInstruction = appInstr
+	
+	rule_InRes_true: for pos.InRes as res where pos.InRes = 1 make dosage.asNeeded = true
+	rule_InRes_false: for pos.InRes as res where pos.InRes = 0 make dosage.asNeeded = false
+	
+	rule_Roa: for source.Roa as roa make cc("http://index.hcisolutions.ch/index/current/get.aspx?schema=CODE&keytype=CDTYP&key=26", roa) as t, dosage.route = t
+}
+
+rule_substitution: for source.Subs as subs make target.substitution as substitution then {
+	
+	rule_true: for subs where subs = 1 make substitution.allowed = true
+	rule_false: for subs where subs = 0 make substitution.allowed = false
+}
+
+rule_dispense: for source.NbPack as nbpack make target.dispenseRequest as req, req.quantity as q then {
+	rule_nbpack: for nbpack make q.value = nbpack
+	rule_unit: for nbpack make q.unit = "Package"
+}
+
+rule_Note: for source.AutoMed as am where source.AutoMed = 1 make target.note = create("Annotation") as anno then {
+	rule_note2: for am make anno.text = "This is an auto medication."
+}	
+endgroup

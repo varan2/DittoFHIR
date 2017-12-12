@@ -1,0 +1,262 @@
+FHIR STU3 Buglist
+
+All based on commit: f1d39b4
+
+1.	SimpleWorkerContext#loadFromStream() iterates over a ZipInputStream.
+	Calls SimpleWorkerContext#loadDefinitionItem() in loop which uses
+	SimpleWorkerContext#loadFromFileJson(). SimpleWorkerContext#loadFromFileJson()
+	calls JsonParserBase#parse(InputStream input) which calls JsonParserBase#loadJson(InputStream input).
+	JsonParserBase#loadJson(InputStream input) uses TextFile#streamToString(InputStream input) which closes
+	the stream before returning the result. -> Therefore the second iteration over the ZipInputStream fails.
+	
+	
+2.	From https://www.hl7.org/fhir/structuredefinition.html
+	5.3.3.1 Metadata
+		name | A free text natural language name identifying the structure 
+	and
+		The name of the structure is not required to be globally unique, but the name should have some scoping information (e.g. Acme Inc. (USA), Allergy List) 
+   
+   	But the implementation in ParserBase#getDefinition(int line, int col, String name) with
+   
+		// first pass: only look at base definitions
+		  for (StructureDefinition sd : context.allStructures()) {
+		    if (sd.getUrl().equals("http://hl7.org/fhir/StructureDefinition/"+name)) {
+		      return sd;
+		    }
+		  }
+	    for (StructureDefinition sd : context.allStructures()) {
+	      if (name.equals(sd.getIdElement().getIdPart())) {
+	        return sd;
+	      }
+	    }
+	    
+	doesn't supports this. The documentation is unclear about the resourceType:
+		- https://www.hl7.org/fhir/resource.html#versions and https://hl7.org/fhir/resource.html#id allowing the conclusion, that the
+		  resource type isn't necessarily globally unique. The variable 'name' is the resourceType of the StructureDefinition for the Json element
+		  and is captured by the first loop even if the correct StructureDefinition is "http://something.org/xyz/Patient" and 
+		  not "http://hl7.org/fhir/StructureDefinition/Patient".
+		
+		- The resource examples containing all the resource type definition similar to this: "resourceType": "Patient" and never the unique
+		  StructureDefinition url. Since there is no namespace definition in JSON to declare that the resourceType is from "http://something.org/xyz/" a resource can't
+		  be parsed correctly as soon as there are not unique resourceTypes from different namespaces.
+		  
+	    - A StructureDefinition not necessarily defines a id. In this case Resource#getIdElement() generates one but this makes it very
+	      unlikely that a resource contains the generated id, when this point in the code is reached.
+	      
+	    - Overall the concept of resourceType doesn't feel like it's fully thought through.		  
+    
+    	Bugfix -> give all StructureDefinitions a unique resourceType
+	
+	
+	3. FHIRPath interpretation in Mapping Language
+	
+	Caused by: org.hl7.fhir.dstu3.utils.FHIRLexer$FHIRLexerException: Unknown character escape \d
+	
+	is thrown for the following where clauses:
+		- where "1234567891011".matches("/(\d){13}/g")
+		- where "1234567891011".matches("/(\\d){13}/g")
+		- where "1234567891011".matches("/(\\\\d){13}/g")  // just in case '\\' is replaced with '\' while interpreting the mapping language.
+		
+	Based on http://hl7.org/fhirpath/#expressions Chapter 5.6.8. replaceMatches(regex : string, substitution: string) : string I expected 
+	that at least one of them would work.
+
+	My workaround was: "1234567891011".matches("/([0-9]){13}/g") 
+	
+	4. Can't set the contained property of a Resource
+	
+	2017-06-01 18:36:37 [http-nio-8080-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.hl7.fhir.exceptions.FHIRException: Cannot set property contained on null - value is not a primitive type (Practitioner) or an ElementModel type] with root cause
+	org.hl7.fhir.exceptions.FHIRException: Cannot set property contained on null - value is not a primitive type (Practitioner) or an ElementModel type
+	
+	Source:
+	rule_author: for source.Auth as author make target.contained = create("Practitioner") as practitioner then {
+		rule_t2: for author make practitioner.gender = "male"
+	}
+	
+	4.1 https://www.hl7.org/fhir/mapping-language.html#7.6.0.7.3
+	
+	append 	|source... |	source is element or string - just append them all together
+	
+	Resource should also be appendable because I want to append a resource to target.contained
+	
+	
+	5. [groupName](source, reference(targetResource), target) -> fails unexpected '('
+	
+	6. http://hl7.org/fhir/valueset.html#resource says, the expansion profile is not mandatory.
+	I used the CodeSystem "eMediplanRoaTypeCodeSystem.json" and the ValueSet "eMediplanRoaTypeValueSet.json"
+	
+	During the mapping process the following line fails:
+		rule_roa: for source.Roa as roa make dosage.route = cc("http://hl7.org/fhir/ValueSet/eMediplanRoaTypeValueSet", roa)
+	
+	Error:  org.hl7.fhir.exceptions.FHIRException: Exception executing transform dosage.route = cc("http://hl7.org/fhir/ValueSet/eMediplanRoaTypeValueSet", roa) on Rule "rule_roa": No ExpansionProfile provided] with root cause
+			org.hl7.fhir.exceptions.FHIRException: No ExpansionProfile provided
+			
+	7. Can't create DateTime fields with mapping language
+	Test 1:
+		rule_from: for pos.DtFrom as dtFrom make period.start = "2017-01-01"
+	Error: "Unable to convert a org.hl7.fhir.dstu3.model.StringType to a DateTime"
+	
+	Test 2:
+		rule_from: for pos.DtFrom as dtFrom make period.start = create("DateTime") then {
+			rule1: for dtFrom make period.start = "2017-01-01"
+		}
+	Error: "Exception executing transform period.start = create(\"DateTime\") on Rule \"rule_from\": Unknown Resource or Type Name 'DateTime'"
+	
+	8. Der Typ Decimal kann nicht gemappt werden.
+	
+	StructureDefinition:
+			{
+				"path": "eMediplanPosology.CyDu",
+				"min": "0",
+				"max": "1",
+				"type": [
+					{
+						"code": "decimal"
+					}
+				]
+			},
+			
+	Mapping:
+		rule_rep_period: for pos.CyDu as cydu make repeat.period = cydu
+		
+	Error: Unable to convert a org.hl7.fhir.dstu3.elementmodel.Element to a Decimal
+	
+	9. Es scheint Probleme mit "Inner" Definitions zu geben, solche, die innerhalb des StructureDefinition.snapshot elements hinterlegt werden.
+	
+	rule_timing: for pos make dosage.timing = create("Timing") as timing, timing.repeat as repeat then {
+		rule_rep: for pos.Rep as rep make repeat.count = rep
+	}
+	
+	Error:
+		org.hl7.fhir.exceptions.FHIRException: Unable to find definition for type Timing.repeat
+		
+	10. Die Methode cc() funktioniert nicht, wenn als System eine URI mit "https" angegeben wird:
+			rule_Roa: for source.Roa as roa make cc("http://index.hcisolutions.ch/index/current/get.aspx?schema=CODE&keytype=CDTYP&key=26", roa, "asdf") as t, dosage.route = t
+		funktioniert wogegen
+			rule_Roa: for source.Roa as roa make cc("https://index.hcisolutions.ch/index/current/get.aspx?schema=CODE&keytype=CDTYP&key=26", roa, "asdf") as t, dosage.route = t
+		die folgende Exception wirft:
+		"Exception executing transform cc(\"https://index.hcisolutions.ch/index/current/get.aspx?schema=CODE&keytype=CDTYP&key=26\", roa, \"asdf\") as t on Rule \"rule_Roa\": fetching org.hl7.fhir.dstu3.model.ValueSet not done yet for URI 'https://index.hcisolutions.ch/index/current/get.aspx?schema=CODE&keytype=CDTYP&key=26'"
+		
+	11. Alle Versuche ein CodeableConcept an MedicationRequest.medicationCodeableConcept zuzuweisen schlagen fehl:
+		rule_type_3: for source.Id as id where source.IdType = 3 make target.medication = cc("http://Pharmacode", id)
+	
+		Exception: 	java.lang.NullPointerException: null
+						at org.hl7.fhir.dstu3.elementmodel.ObjectConverter.convertElement(ObjectConverter.java:56)
+						at org.hl7.fhir.dstu3.elementmodel.ObjectConverter.convert(ObjectConverter.java:46)
+						at org.hl7.fhir.dstu3.elementmodel.Element.convertToElement(Element.java:362)
+						at org.hl7.fhir.dstu3.elementmodel.Element.setProperty(Element.java:298)
+		
+FHIR STU3 Questions
+
+1.	Wieso gibt es keine Methode StructureMapUtilities#transform(Object appInfo, Base source, Base target),
+	welche StructureMapUtilities#Map<String, StructureMap> library nach einer passenden Map durchsucht?
+	
+2.	Ausser NamingSystem hat jede Definition, Set oder System ein Feld url. Naming System hat stattdessen ein Feld uniqueId.
+	Die Erklärung '4.10.4.3 Dealing with duplicate entries' ist noch nachvollziehbar. Eine 'url' würde jedoch die Implementation vereinfachen.
+	
+	Beispiel:
+	
+		for (String f : new File(Utilities.path(structureDefinitionsPath)).list()) {
+			try {
+				Resource r = new JsonParser()
+						.parse(new FileInputStream(Utilities.path(structureDefinitionsPath, f)));
+				
+				String url = "";
+				
+				if (r instanceof StructureDefinition)
+					ctx.seeProfile(url, (StructureDefinition) r);
+				    else if (r instanceof ValueSet)
+				    	url = ((ValueSet) r).getUrl();
+				    else if (r instanceof CodeSystem)
+				    	url = ((CodeSystem) r).getUrl();
+				    else if (r instanceof OperationDefinition)
+				    	url = ((OperationDefinition) r).getUrl();
+				    else if (r instanceof ConceptMap)
+				    	url = ((ConceptMap) r).getUrl();
+				    else if (r instanceof StructureMap)
+				    	url = ((StructureMap) r).getUrl();
+				    else if (r instanceof NamingSystem)
+				    	url = ""; // NamingSystem has no url field.
+				
+				ctx.seeResource(url, r);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// SampleWorkerContext#seeResource(String url, Resource r)
+		public void seeResource(String url, Resource r) throws FHIRException {
+			if (r instanceof StructureDefinition)
+			  seeProfile(url, (StructureDefinition) r);
+			else if (r instanceof ValueSet)
+			  seeValueSet(url, (ValueSet) r);
+			else if (r instanceof CodeSystem)
+			  seeCodeSystem(url, (CodeSystem) r);
+			else if (r instanceof OperationDefinition)
+			  seeOperationDefinition(url, (OperationDefinition) r);
+			else if (r instanceof ConceptMap)
+			  maps.put(((ConceptMap) r).getUrl(), (ConceptMap) r);
+			else if (r instanceof StructureMap)
+			  transforms.put(((StructureMap) r).getUrl(), (StructureMap) r);
+			else if (r instanceof NamingSystem)
+				systems.add((NamingSystem) r);
+		}
+		
+	Dies bläst nicht nur den Code auf, sondern verstösst auch gegen die Definitionen der Objekte. Die Url ist nie ein Pflichtfeld, daher ist es 
+	irritierend, wenn SampleWorkerContext#seeResource(String url, Resource r) eine Url verlangt.
+	
+	Mein Vorschlag wäre, dass alle Sets, Definitions und Systems mindestens eine Url haben müssen. Alles andere hat sich als für mich als problematisch erwiesen.
+	Die Implemenation könnte dann etwa so aussehen.
+	
+		for (String f : new File(Utilities.path(structureDefinitionsPath)).list()) {
+			try {
+				Resource r = new JsonParser()
+						.parse(new FileInputStream(Utilities.path(structureDefinitionsPath, f)));
+				
+				ctx.seeResource(r);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// SampleWorkerContext#seeResource(Resource r)
+		
+		public void seeResource(Resource r) throws FHIRException {
+			if (r instanceof StructureDefinition)
+			  seeProfile(((StructureDefinition) r).getUrl(), (StructureDefinition) r);
+			else if (r instanceof ValueSet)
+			  seeValueSet(((ValueSet) r).getUrl(), (ValueSet) r);
+			else if (r instanceof CodeSystem)
+			  seeCodeSystem(((CodeSystem) r).getUrl(), (CodeSystem) r);
+			else if (r instanceof OperationDefinition)
+			  seeOperationDefinition(((OperationDefinition) r).getUrl(), (OperationDefinition) r);
+			else if (r instanceof ConceptMap)
+			  maps.put(((ConceptMap) r).getUrl(), (ConceptMap) r);
+			else if (r instanceof StructureMap)
+			  transforms.put(((StructureMap) r).getUrl(), (StructureMap) r);
+			else if (r instanceof NamingSystem)
+				systems.add((NamingSystem) r);
+		}
+		
+	SampleWorkerContext#seeResource(Resource r) könnte auch heute schon so realisiert werden.
+	
+	3. Wie wird ein BackboneElement erstellt? Beispielsweise Patient.communication
+	
+	4. Resource Dosage erlaubt wiederholungen/repetierungen (bspw. alle 8h), jedoch keine unterschiedlichen Dosen im Tag.
+	
+		Bsp: eMediplan, Posology.D [1, 2, 3, 4] = Morgens 1 Tablette, Mittags 2x, Nachmittags 3x und Nachts 4x
+		
+	  In Fhir müssen hierfür 4 Dosage Elemente an den MedicationRequest angehängt werden.
+	  
+	  -> Evt. wäre es noch sinnvoll dies anzupassen.
+	  
+	5. In der Mapping Language sollte anstelle von src_context.field für die source ebenfalls FHIRPath expressions zugelassen sein. Zumindest die Auswahl von Elementen 
+		per Index sollte möglich sein.
+		
+		Ansonsten sind Objekte wie Posology.D nicht verarbeitbar.
+		
+	6. Variablen sollten auch im WHERE Bereich bereits verfügbar sein:
+		rule_InRes_true: for pos.InRes as res where res = 1 make dosage.asNeeded = true
+		
+	   Die obere Regel wird nie ausgeführt, da res nie = 1 ist.

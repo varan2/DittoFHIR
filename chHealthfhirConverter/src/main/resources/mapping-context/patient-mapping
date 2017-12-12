@@ -1,0 +1,38 @@
+map "http://hl7.org/fhir/StructureMap/eMediplanPatientToFhir" = "eMediplanPatientToPatient"
+
+uses "http://hl7.org/fhir/StructureDefinition/eMediplanPatient" as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" as target
+
+imports "http://hl7.org/fhir/StructureMap/eMediplanPatientIdToIdentifier"
+
+group patientToFhir
+  input source : eMediplanPatient as source
+  input target : Patient as target
+
+
+rule_names: for source as src make target.name = create("HumanName") as hName then {
+	rule_firstname: for src.FName as firstname make hName.given = firstname
+	rule_lastname: for src.LName as lastname make hName.family = lastname
+}
+
+rule_birthdate: for source.BDt as birthdate make target.birthDate = birthdate
+
+rule_gender_male: for source.Gender as gender where source.Gender = 1 make target.gender = "male"
+rule_gender_female: for source.Gender as gender where source.Gender = 2 make target.gender = "female"
+
+rule_address: for source as src make target.address = create("Address") as address then {
+	rule_street: for src.Street as street make address.line = street
+	rule_zip: for src.Zip as zip make address.postalCode = zip
+	rule_city: for src.City as city make address.city = city
+}
+
+rule_phone: for source.Phone as phone make target.telecom = create("ContactPoint") as contact then {
+	rule_system: for phone make contact.system = "phone"
+	rule_value: for phone make contact.value = phone
+}
+
+rule_com: for source.Lng as l make target.communication as comm, comm.language = cc("urn:ietf:bcp:47", l)
+
+rule_patientids: for source.Ids as ids make target.identifier as identifier then patientIdToFhir(ids, identifier)
+
+endgroup

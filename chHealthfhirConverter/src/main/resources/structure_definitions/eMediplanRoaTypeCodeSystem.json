@@ -1,0 +1,28 @@
+{
+  "resourceType": "CodeSystem",
+  "id": "eMediplanRoaTypeCodeSystem",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/StructureDefinition/eMediplanRoaTypeCodeSystem"
+    ]
+  },
+  "url": "http://hl7.org/fhir/CodeSystem/eMediplanRoaTypeCodeSystem",
+  "identifier": {
+    "system": "http://hl7.org/fhir/CodeSystem/eMediplanRoaTypeCodeSystem",
+    "value": "CDTYPE26"
+  },
+  "version": "0.1",
+  "name": "eMediplan route of application type",
+  "status": "draft",
+  "experimental": true,
+  "description": "The route of application type",
+  "caseSensitive": true,
+  "content": "complete",
+  "concept": [
+    {
+      "code": "PO",
+      "display": "Unknown",
+      "definition": "Unknown"
+    }
+  ]
+}
